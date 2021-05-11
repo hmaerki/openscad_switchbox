@@ -1,2 +1,2 @@
-# openscad_switchbox
-Playing around with OpenScad and SolidPython
+https://github.com/SolidCode/SolidPython
+
