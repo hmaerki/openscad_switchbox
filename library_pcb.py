@@ -48,7 +48,7 @@ class CoreBcb:
     pcb_y = 53.5 / 2 + 8.5  # Distance between device usb and center pcb
     screws_distance_x = 72
     screws_y = 3  # Distance between screens and center pcb
-    screws_length = 6
+    screws_dummy_length = 5
     screws_d = 2
     soldering_thickness = 2
     pcb_thickness = 1.6
@@ -61,10 +61,10 @@ class CoreBcb:
 
         for x in [-self.screws_distance_x / 2, self.screws_distance_x / 2]:
             pcb += translate(
-                v=[x, self.screws_y, self.soldering_thickness - self.screws_length]
+                v=[x, self.screws_y, self.soldering_thickness - self.screws_dummy_length]
             )(
                 # Screws
-                cylinder(d=self.screws_d, h=self.screws_length, center=True)
+                cylinder(d=self.screws_d, h=self.screws_dummy_length, center=True)
             )
         return translate(v=[0, self.offset_y, -self.pcb_thickness / 2])(pcb)
 
