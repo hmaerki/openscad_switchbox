@@ -5,62 +5,78 @@ from solid.utils import *
 
 @dataclass
 class CoreUsbDevice:
-    width = 15
-    height = 7
-    thickness_dummy = 100
+    size_x = 15
+    size_z = 7
+    size_y_dummy = 35
 
     def draw(self):
-        return translate(v=[-self.thickness_dummy, -self.width / 2, 0])(
-            cube(size=[self.thickness_dummy, self.width, self.height], center=False)
+        return translate(v=[0, self.size_y_dummy / 2, self.size_z / 2])(
+            cube(size=[self.size_x, self.size_y_dummy, self.size_z], center=True)
         )
 
 
 @dataclass
-class CoreUsbPcb:
-    width = 12
-    height = 12.5
-    dy = 56 / 3
-    thickness_dummy = 100
+class CoreUsbPC:
+    size_x = 12
+    size_z = 12.5
+    dx = 56 / 3
+    thickness_dummy = 35
 
     def draw(self):
         pcb = union()
         for i in [-1.5, -0.5, 0.5, 1.5]:
-            y = self.dy * i - self.width / 2
-            pcb += translate(v=[0, y, 0])(
-                cube(size=[self.thickness_dummy, self.width, self.height], center=False)
+            x = self.dx * i
+            pcb += translate(v=[x, -self.thickness_dummy / 2, self.size_z / 2])(
+                cube(size=[self.size_x, self.thickness_dummy, self.size_z], center=True)
             )
         return pcb
 
 
 @dataclass
 class CoreBcb:
-    pcb_width = 89.5
-    pcb_depth = 53.5
-    pcb_x = 4
-    screws_distance_y = 72
-    screws_x = 34
+    """
+    X-centered to the pcb border.
+    Y-centered to the usb connectors.
+    The z-zero is the top of the pcb.
+    """
+
+    size_x = 89.5
+    size_y = 53.5
+    usb_overall_y = 66
+    usb_PC_overhead_y = 4.5
+    offset_y = -(usb_overall_y / 2 - usb_PC_overhead_y - size_y / 2)
+    pcb_y = 53.5 / 2 + 8.5  # Distance between device usb and center pcb
+    screws_distance_x = 72
+    screws_y = 3  # Distance between screens and center pcb
     screws_length = 6
+    screws_d = 2
     soldering_thickness = 2
     pcb_thickness = 1.6
 
     def draw(self):
         # PCB
         pcb = union()
-        pcb += cube(
-            size=[self.pcb_depth, self.pcb_width, self.pcb_thickness], center=False
-        )
-        for y in [-self.screws_distance_y / 2, self.screws_distance_y / 2]:
+
+        pcb += cube(size=[self.size_x, self.size_y, self.pcb_thickness], center=True)
+
+        for x in [-self.screws_distance_x / 2, self.screws_distance_x / 2]:
             pcb += translate(
-                v=[self.screws_x, y, self.soldering_thickness - self.screws_length]
+                v=[x, self.screws_y, self.soldering_thickness - self.screws_length]
             )(
                 # Screws
-                cylinder(d=2, h=self.screws_length, center=True)
+                cylinder(d=self.screws_d, h=self.screws_length, center=True)
             )
-        return pcb
+        return translate(v=[0, self.offset_y, -self.pcb_thickness / 2])(pcb)
+
+
+@dataclass
+class CorePcbAssembled:
+    def draw(self):
+        return union()(CoreBcb().draw(), CoreUsbDevice().draw(), CoreUsbPC().draw())
 
 
 SEGMENTS = 48
 
-d = union()(CoreBcb().draw(), CoreUsbDevice().draw(), CoreUsbPcb().draw())
+d = CorePcbAssembled().draw()
 
 scad_render_to_file(d, file_header=f"$fn = {SEGMENTS};", include_orig_code=True)

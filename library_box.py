@@ -19,6 +19,7 @@ class Corner:
             translate(v=[self.hole_xy, self.hole_xy, 0])(circle(r=self.hole_d / 2)),
         )
 
+
 @dataclass
 class Corners:
     bounding_box = None
@@ -43,9 +44,9 @@ class Corners:
 
 @dataclass
 class BoxSkeleton:
-    size_x: float = 40.0
+    size_x: float = 50.0
     size_y: float = 30.0
-    size_z: float = 20.0
+    size_z: float = 10.0
     wall_thickness: float = 1.0
     wall_r: float = 6.0
     cavities = union()
@@ -53,45 +54,43 @@ class BoxSkeleton:
     def draw(self):
         # Box
         # xy-Axis: center of the box
-        return translate(v=[self.size_x / 2, self.size_y / 2, 0])(
-            difference()(
-                # Outer box
-                linear_extrude(height=self.size_z)(
-                    offset(r=self.wall_r)(
-                        square(
-                            [
-                                self.size_x - 2 * self.wall_r,
-                                self.size_y - 2 * self.wall_r,
-                            ],
-                            center=True,
-                        )
+        return difference()(
+            # Outer box
+            linear_extrude(height=self.size_z)(
+                offset(r=self.wall_r)(
+                    square(
+                        [
+                            self.size_x - 2 * self.wall_r,
+                            self.size_y - 2 * self.wall_r,
+                        ],
+                        center=True,
                     )
-                ),
-                # Inner box
-                # z-Axis: on inner buttom
-                translate(v=[0, 0, self.wall_thickness])(
-                    linear_extrude(height=self.size_z + 0.01)(
-                        difference()(
-                            offset(r=self.wall_r - self.wall_thickness)(
-                                square(
-                                    [
-                                        self.size_x - 2 * self.wall_r,
-                                        self.size_y - 2 * self.wall_r,
-                                    ],
-                                    center=True,
-                                )
-                            ),
-                            self.cavities,
-                        )
+                )
+            ),
+            # Inner box
+            # z-Axis: on inner buttom
+            translate(v=[0, 0, self.wall_thickness])(
+                linear_extrude(height=self.size_z + 0.01)(
+                    difference()(
+                        offset(r=self.wall_r - self.wall_thickness)(
+                            square(
+                                [
+                                    self.size_x - 2 * self.wall_r,
+                                    self.size_y - 2 * self.wall_r,
+                                ],
+                                center=True,
+                            )
+                        ),
+                        self.cavities,
                     )
-                ),
-            )
+                )
+            ),
         )
 
 
 @dataclass
 class Box:
-    corner: Corner = None
+    corner: Corner = Corner()
     boxskeleton: BoxSkeleton = BoxSkeleton()
 
     def draw(self):
@@ -100,3 +99,10 @@ class Box:
         corners.corner = self.corner
         self.boxskeleton.cavities = corners.draw()
         return self.boxskeleton.draw()
+
+
+SEGMENTS = 100
+
+d = Box()
+
+scad_render_to_file(d.draw(), file_header=f"$fn = {SEGMENTS};", include_orig_code=True)

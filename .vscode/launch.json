@@ -9,14 +9,15 @@
             "type": "python",
             "request": "launch",
             "program": "usb_switchbox.py",
-            "console": "integratedTerminal",
-            "env": {"PYTHONPATH": "${workspaceFolder}/pythonopenscad/src${pathSeparator}${env:PYTHONPATH}"}
+            "justMyCode": true,
+            "console": "integratedTerminal"
         },
         {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
             "program": "${file}",
+            "justMyCode": true,
             "console": "integratedTerminal"
         }
     ]
