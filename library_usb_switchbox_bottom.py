@@ -7,6 +7,28 @@ import library_pcb
 import library_display
 
 
+
+@dataclass
+class UsbSwitchBoxCores:
+    size_x:float
+
+    def draw(self):
+        pcb_offset_x = -8
+        pcb_offset_z = 9
+
+        cores = union()
+        # Display
+        display_x = self.size_x / 2
+        display_z = 14
+        cores += translate(v=[display_x, 0, display_z])(
+            rotate([0, 0, 90])(library_display.CoreDisplay().draw())
+        )
+        # PCB
+        cores += translate(v=[pcb_offset_x, 0, pcb_offset_z])(
+            library_pcb.CorePcbAssembled().draw()
+        )
+        return debug(cores)
+
 @dataclass
 class Support:
     size_y: float
@@ -78,17 +100,7 @@ class UsbSwitchBox:
                 )(debug(cylinder(h=pcb_offset_z, r=5))),
             )
 
-        cores = union()
-        # Display
-        display_x = self.size_x / 2
-        display_z = 14
-        cores += translate(v=[display_x, 0, display_z])(
-            rotate([0, 0, 90])(library_display.CoreDisplay().draw())
-        )
-        # PCB
-        cores += translate(v=[pcb_offset_x, 0, pcb_offset_z])(
-            library_pcb.CorePcbAssembled().draw()
-        )
+        cores = UsbSwitchBoxCores(size_x=self.size_x).draw()
 
         return box_complete - cores
 
