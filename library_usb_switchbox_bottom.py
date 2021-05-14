@@ -58,7 +58,7 @@ class UsbSwitchBoxBottom:
     size_y = 65
     size_x = 118
     size_z = 16
-    hull_thickness = 2
+    hull_thickness = 1.6
     corner_r = 2.5
     screw_d = 3
 
@@ -84,7 +84,7 @@ class UsbSwitchBoxBottom:
         box_complete = union()
         box_complete += box.draw()
         support = Support(size_y=self.size_y, size_z=self.size_z)
-        display_supports_x = (14.0, 20.0)
+        display_supports_x = (11.0, 19.0)
         for x in display_supports_x:
             box_complete += (
                 translate(

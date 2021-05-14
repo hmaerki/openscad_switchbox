@@ -7,15 +7,16 @@ import library_pcb
 import library_display
 import library_usb_switchbox_bottom
 
+bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom()
 
 @dataclass
 class UsbSwitchBoxTop:
-    size_y = 65
-    size_x = 118
+    size_y = bottom.size_y
+    size_x = bottom.size_x
     size_z = 13
-    hull_thickness = 2
-    corner_r = 2.5
-    screw_d = 3
+    hull_thickness = bottom.hull_thickness
+    corner_r = bottom.corner_r
+    screw_d = bottom.screw_d
 
     def draw(self):
         # Box with corners
