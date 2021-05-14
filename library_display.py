@@ -62,7 +62,7 @@ class CoreDisplay:
         )
 
         # Raspberry Pi Board
-        pi_thickness = 15
+        pi_thickness = 13.8
         pi_width = 52
         pi_height = 21
         display += translate([-pi_width / 2,self.glass_thickness+ pcb_thickness, -pi_height / 2])(

@@ -5,14 +5,14 @@ from solid.utils import *
 
 @dataclass
 class Corner:
-    hole_xy: float = 4.0
+    hole_xy: float = 5.0
     hole_d: float = 1.5
-    r: float = 2.0
-    d: float = 6.0
+    r: float = 3.0
+    d: float = 7.0
 
     def draw(self):
         return difference()(
-            translate(v=[-self.r, -self.r, 0])(
+            translate(v=[-self.r/2, -self.r/2, 0])(
                 offset(r=self.r)(square([self.d, self.d]))
             ),
             # Screw hole of the corner
