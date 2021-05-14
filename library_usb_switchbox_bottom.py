@@ -11,6 +11,11 @@ import library_display
 @dataclass
 class UsbSwitchBoxCores:
     size_x:float
+    core_pcb_assembled = library_pcb.CorePcbAssembled()
+
+    @property
+    def core_pcb(self):
+        return self.core_pcb_assembled.core_pcb
 
     def draw(self):
         pcb_offset_x = -8
@@ -25,7 +30,7 @@ class UsbSwitchBoxCores:
         )
         # PCB
         cores += translate(v=[pcb_offset_x, 0, pcb_offset_z])(
-            library_pcb.CorePcbAssembled().draw()
+            self.core_pcb_assembled.draw()
         )
         return debug(cores)
 
@@ -49,7 +54,7 @@ class Support:
 
 
 @dataclass
-class UsbSwitchBox:
+class UsbSwitchBoxBottom:
     size_y = 65
     size_x = 118
     size_z = 16
@@ -58,10 +63,12 @@ class UsbSwitchBox:
     screw_d = 3
 
     def draw(self):
+        usb_switch_box_cores = UsbSwitchBoxCores(size_x=self.size_x)
+
         pcb_offset_x = -8
         pcb_offset_z = 9
-        screws_distance_x = 72 # Hack: Copied from library_pcb.py
-        screws_distance_y = 1.25 # Hack: Needs to be calculated correcty
+        screws_distance_x = usb_switch_box_cores.core_pcb.screws_distance_x #  72 # Hack: Copied from library_pcb.py
+        screws_distance_y = usb_switch_box_cores.core_pcb.screws_distance_y # 1.25 # Hack: Needs to be calculated correcty
 
         # Box with corners
         corner = library_box.Corner()
@@ -69,7 +76,7 @@ class UsbSwitchBox:
             size_x=self.size_x,
             size_y=self.size_y,
             size_z=self.size_z,
-            wall_thickness=self.hull_thickness,
+            hull_thickness=self.hull_thickness,
         )
         box = library_box.Box(boxskeleton=boxskeleton, corner=corner)
 
@@ -100,15 +107,13 @@ class UsbSwitchBox:
                 )(debug(cylinder(h=pcb_offset_z, r=5))),
             )
 
-        cores = UsbSwitchBoxCores(size_x=self.size_x).draw()
-
-        return box_complete - cores
+        return box_complete - usb_switch_box_cores.draw()
 
 
 SEGMENTS = 100
 
-core_display = UsbSwitchBox()
+box = UsbSwitchBoxBottom()
 
 scad_render_to_file(
-    core_display.draw(), file_header=f"$fn = {SEGMENTS};", include_orig_code=True
+    box.draw(), file_header=f"$fn = {SEGMENTS};", include_orig_code=True
 )

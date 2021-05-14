@@ -24,7 +24,7 @@ class UsbSwitchBoxTop:
             size_x=self.size_x,
             size_y=self.size_y,
             size_z=self.size_z,
-            wall_thickness=self.hull_thickness,
+            hull_thickness=self.hull_thickness,
         )
         box = library_box.Box(boxskeleton=boxskeleton, corner=corner)
 
