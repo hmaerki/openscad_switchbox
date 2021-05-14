@@ -2,7 +2,7 @@ https://github.com/SolidCode/SolidPython
 
 TODO:
   * DONE: Physical: Optimal wall width 2.0 -> 1.6mm (2*0.8mm nozzle)
-  * Physical: Display: Do not press reset button
+  * DONE: Physical: Display: Do not press reset button
   * Physical: Box: Configure hole for screw header/shaft
   * DONE: Physical: Support for PCB
   * DONE: Sockets bigger: -> Size bigger

@@ -9,6 +9,7 @@ import library_usb_switchbox_bottom
 
 bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom()
 
+
 @dataclass
 class UsbSwitchBoxTop:
     size_y = bottom.size_y

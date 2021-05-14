@@ -65,15 +65,17 @@ class CoreDisplay:
         pi_thickness = 13.8
         pi_width = 52
         pi_height = 21
-        display += translate([-pi_width / 2,self.glass_thickness+ pcb_thickness, -pi_height / 2])(
-            cube([pi_width, pi_thickness, pi_height])
-        )
+        display += translate(
+            [-pi_width / 2, self.glass_thickness + pcb_thickness, -pi_height / 2]
+        )(cube([pi_width, pi_thickness, pi_height]))
 
         # USB
         usb_center_y = 15
-        display += translate([pi_width / 2, usb_center_y, 0])(
-            CoreDisplayUsb().draw()
-        )
+        display += translate([pi_width / 2, usb_center_y, 0])(CoreDisplayUsb().draw())
+
+        # Reset Button
+        display += translate([12, 21, -4])(rotate([90, 0, 0])(cylinder(d=5, h=21)))
+
         return display
 
 
