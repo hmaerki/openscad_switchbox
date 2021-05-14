@@ -30,8 +30,8 @@ class CoreDisplayUsb:
 @dataclass
 class CoreDisplay:
     glass_thickness = 3
-    glass_width = 44
-    glass_height = 18
+    glass_width = 48
+    glass_height = 20
     glass_r = 3
 
     def draw(self):
