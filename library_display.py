@@ -55,14 +55,14 @@ class CoreDisplay:
 
         # PCB
         pcb_thickness = 2
-        pcb_width = 52.5
+        pcb_width = 53
         pcb_height = 25
         display += translate([-pcb_width / 2, self.glass_thickness, -pcb_height / 2])(
             cube([pcb_width, pcb_thickness, pcb_height])
         )
 
         # Raspberry Pi Board
-        pi_thickness = 13.8
+        pi_thickness = 14.3
         pi_width = 52
         pi_height = 21
         display += translate(
@@ -70,7 +70,7 @@ class CoreDisplay:
         )(cube([pi_width, pi_thickness, pi_height]))
 
         # USB
-        usb_center_y = 15
+        usb_center_y = 19
         display += translate([pi_width / 2, usb_center_y, 0])(CoreDisplayUsb().draw())
 
         # Reset Button

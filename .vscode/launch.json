@@ -8,7 +8,7 @@
             "name": "Python: usb_switchbox",
             "type": "python",
             "request": "launch",
-            "program": "usb_switchbox.py",
+            "program": "library_usb_switchbox_top.py",
             "justMyCode": true,
             "console": "integratedTerminal"
         },

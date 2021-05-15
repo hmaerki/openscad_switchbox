@@ -101,7 +101,7 @@ class UsbSwitchBoxBottom:
         box_complete += box.draw()
         support = SupportY(size_y=self.size_y, size_z=self.size_z)
 
-        display_supports_x = (11.0, 18.8)
+        display_supports_x = (11.0, 19.3)
         for x in display_supports_x:
             box_complete += (
                 translate(

@@ -17,7 +17,7 @@ class CoreUsbDevice:
 
 @dataclass
 class CoreUsbPC:
-    size_x = 12
+    size_x = 13
     size_z = 12.5
     dx = 56 / 3
     thickness_dummy = 35

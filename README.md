@@ -16,3 +16,8 @@ TODO:
   * DONE: Programming: `wall` -> `shell`
   * DONE: Programming: Wall Thickness: Code `hull_thickness` <-> `wall_thickness`
   * DONE: Programming: Correctly program dependencies
+
+  * DONE: Physical: Display PCB to narrow, does not enter nicely. 0.5mm
+  * DONE: Physical: Display depth to narrow, does not enter nicely. 0.5mm
+  * DONE: Physical: Display USB 4mm to the back
+  * DONE: Physical: USB-connector PC: 1mm wider
