@@ -73,7 +73,7 @@ class SupportX:
 class UsbSwitchBoxBottom:
     size_y = 65
     size_x = 120
-    size_z = 16
+    size_z = 16.5
     hull_thickness = 1.6
     corner_r = 2.5
     screw_d = 3
@@ -85,6 +85,7 @@ class UsbSwitchBoxBottom:
         pcb_offset_z = usb_switch_box_cores.pcb_offset_z
         screws_distance_x = usb_switch_box_cores.core_pcb.screws_distance_x
         screws_distance_y = usb_switch_box_cores.core_pcb.screws_distance_y
+        pcp_support_z_over = usb_switch_box_cores.core_pcb.pcp_support_z_over
 
         # Box with corners
         corner = library_box.Corner()
@@ -108,42 +109,49 @@ class UsbSwitchBoxBottom:
                     v=[
                         self.size_x / 2 - x - support.thickness_x / 2,
                         0,
-                        self.size_z / 2,
+                        support.size_z / 2,
                     ]
                 )(support.draw()),
             )
 
-        pcb_support_x = SupportX(size_x=14, size_z=pcb_offset_z - SMALL)
-        box_complete += translate([-52, screws_distance_y, pcb_offset_z / 2])(
-            pcb_support_x.draw()
-        )
-
-        pcb_support_y = SupportY(size_y=self.size_y, size_z=pcb_offset_z)
-        for x in (pcb_offset_x - 39, pcb_offset_x + 39):
-            box_complete += (
-                translate(
-                    v=[
-                        x,
-                        0,
-                        pcb_offset_z / 2 - SMALL,
-                    ]
-                )(pcb_support_y.draw()),
+        if True:
+            pcb_support_x = SupportX(
+                size_x=14, size_z=pcb_offset_z + pcp_support_z_over - SMALL
             )
+            box_complete += translate(
+                [-52, screws_distance_y, pcb_support_x.size_z / 2]
+            )(pcb_support_x.draw())
 
-        pcb_screws_x = (
-            pcb_offset_x - screws_distance_x / 2,
-            pcb_offset_x + screws_distance_x / 2,
-        )
-        for x in pcb_screws_x:
-            box_complete += (
-                translate(
-                    v=[
-                        x,
-                        screws_distance_y,
-                        -SMALL,
-                    ]
-                )(cylinder(h=pcb_offset_z, r=5)),
+        if True:
+            pcb_support_y = SupportY(
+                size_y=self.size_y, size_z=pcb_offset_z + pcp_support_z_over - SMALL
             )
+            for x in (pcb_offset_x - 39, pcb_offset_x + 39):
+                box_complete += (
+                    translate(
+                        v=[
+                            x,
+                            0,
+                            pcb_support_y.size_z / 2 - SMALL,
+                        ]
+                    )(pcb_support_y.draw()),
+                )
+
+        if True:
+            pcb_screws_x = (
+                pcb_offset_x - screws_distance_x / 2,
+                pcb_offset_x + screws_distance_x / 2,
+            )
+            for x in pcb_screws_x:
+                box_complete += (
+                    translate(
+                        v=[
+                            x,
+                            screws_distance_y,
+                            -SMALL,
+                        ]
+                    )(cylinder(h=pcb_offset_z, r=5)),
+                )
 
         return box_complete - usb_switch_box_cores.draw()
 

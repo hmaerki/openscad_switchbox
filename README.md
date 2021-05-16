@@ -21,3 +21,6 @@ TODO:
   * DONE: Physical: Display depth to narrow, does not enter nicely. 0.5mm
   * DONE: Physical: Display USB 4mm to the back
   * DONE: Physical: USB-connector PC: 1mm wider
+
+  * DONE: Physical: Display reposition reset buttom
+  * DONE: Physical: BCP Socket with overlap.

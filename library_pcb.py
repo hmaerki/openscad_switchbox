@@ -6,7 +6,7 @@ from solid.utils import *
 @dataclass
 class CoreUsbDevice:
     size_x = 15
-    size_z = 7
+    size_z = 7.5
     size_y_dummy = 35
 
     def draw(self):
@@ -40,19 +40,20 @@ class CoreBcb:
     The z-zero is the top of the pcb.
     """
 
-    size_x = 89.5
+    size_x = 90.0
     size_y = 53.5
     usb_overall_y = 66
     usb_PC_overhead_y = 4.5
     offset_y = -(usb_overall_y / 2 - usb_PC_overhead_y - size_y / 2)
     pcb_y = 53.5 / 2 + 8.5  # Distance between device usb and center pcb
-    screws_distance_x = 72
-    screws_distance_y = 1.25 # The y offset of the screws to the case - Needs to be calculated correctly
+    screws_distance_x = 72.5
+    screws_distance_y = 1  # The y offset of the screws to the case - Needs to be calculated correctly
     screws_y = 3  # Distance between screens and center pcb
     screws_dummy_length = 5
     screws_d = 2
     soldering_thickness = 2
     pcb_thickness = 1.6
+    pcp_support_z_over = 3
 
     def draw(self):
         # PCB
@@ -60,9 +61,17 @@ class CoreBcb:
 
         pcb += cube(size=[self.size_x, self.size_y, self.pcb_thickness], center=True)
 
+        pcb += translate(v=[0, 0, (self.pcb_thickness + self.pcp_support_z_over) / 2])(
+            cube(size=[self.size_x, self.size_y, self.pcp_support_z_over], center=True)
+        )
+
         for x in [-self.screws_distance_x / 2, self.screws_distance_x / 2]:
             pcb += translate(
-                v=[x, self.screws_y, self.soldering_thickness - self.screws_dummy_length]
+                v=[
+                    x,
+                    self.screws_y,
+                    self.soldering_thickness - self.screws_dummy_length,
+                ]
             )(
                 # Screws
                 cylinder(d=self.screws_d, h=self.screws_dummy_length, center=True)

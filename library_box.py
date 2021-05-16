@@ -5,7 +5,7 @@ from solid.utils import *
 
 @dataclass
 class Corner:
-    hole_xy: float = 5.0
+    hole_xy: float = 4.0
     hole_d: float = 1.5
     r: float = 3.0
     d: float = 7.0

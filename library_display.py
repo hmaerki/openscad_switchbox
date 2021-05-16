@@ -74,7 +74,8 @@ class CoreDisplay:
         display += translate([pi_width / 2, usb_center_y, 0])(CoreDisplayUsb().draw())
 
         # Reset Button
-        display += translate([12, 21, -4])(rotate([90, 0, 0])(cylinder(d=5, h=21)))
+        for z in (-3, -2, -1, 0, 1, 2):
+            display += translate([13, 21, z])(rotate([90, 0, 0])(cylinder(d=5, h=21)))
 
         return display
 
