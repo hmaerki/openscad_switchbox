@@ -76,8 +76,9 @@ class CoreDisplay:
 
         if not self.is_top:
             # Reset Button
-            for z in (-3, -2, -1, 0, 1, 2):
-                display += translate([13, 21, z])(rotate([90, 0, 0])(cylinder(d=5, h=21)))
+            for x in (13, -9):
+                for z in (-3, -2, -1, 0, 1, 2):
+                    display += translate(v=[x, 25, z])(debug(rotate([90, 0, 0])(cylinder(d=5, h=10))))
 
         return display
 
