@@ -14,7 +14,7 @@ bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom()
 class UsbSwitchBoxTop:
     size_y = bottom.size_y
     size_x = bottom.size_x
-    size_z = 13
+    size_z = 12.5
     hull_thickness = bottom.hull_thickness
     corner_r = bottom.corner_r
     screw_d = bottom.screw_d
