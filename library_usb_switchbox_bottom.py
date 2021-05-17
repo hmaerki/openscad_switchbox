@@ -71,7 +71,7 @@ class SupportX:
 
 @dataclass
 class UsbSwitchBoxBottom:
-    size_y = 65
+    size_y = 66
     size_x = 120
     size_z = 16.5
     hull_thickness = 1.6

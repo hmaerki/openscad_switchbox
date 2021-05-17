@@ -3,8 +3,6 @@ from solid import *
 from solid.utils import *
 
 import library_box
-import library_pcb
-import library_display
 import library_usb_switchbox_bottom
 
 bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom()
@@ -14,7 +12,8 @@ bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom()
 class UsbSwitchBoxTop:
     size_y = bottom.size_y
     size_x = bottom.size_x
-    size_z = 12.5
+    size_z_overall = 29
+    size_z = size_z_overall - bottom.size_z
     hull_thickness = bottom.hull_thickness
     corner_r = bottom.corner_r
     screw_d = bottom.screw_d
@@ -33,6 +32,19 @@ class UsbSwitchBoxTop:
         # Box with supports
         box_complete = union()
         box_complete += box.draw()
+
+        support = library_usb_switchbox_bottom.SupportY(size_y=self.size_y, size_z=self.size_z)
+        display_supports_x = (11.0, 19.3)
+        for x in display_supports_x:
+            box_complete += (
+                translate(
+                    v=[
+                        self.size_x / 2 - x - support.thickness_x / 2,
+                        0,
+                        support.size_z / 2,
+                    ]
+                )(support.draw()),
+            )
 
         pcb_offset_z = 29
         cores = translate(v=[0, 0, pcb_offset_z])(
