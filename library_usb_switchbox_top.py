@@ -16,11 +16,11 @@ class UsbSwitchBoxTop:
     size_z = size_z_overall - bottom.size_z
     hull_thickness = bottom.hull_thickness
     corner_r = bottom.corner_r
-    screw_d = bottom.screw_d
+    screw_hole_top_d  = bottom.screw_hole_top_d    
 
     def draw(self):
         # Box with corners
-        corner = library_box.Corner()
+        corner = library_box.Corner(hole_d=self.screw_hole_top_d)
         boxskeleton = library_box.BoxSkeleton(
             size_x=self.size_x,
             size_y=self.size_y,

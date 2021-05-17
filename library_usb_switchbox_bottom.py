@@ -77,7 +77,8 @@ class UsbSwitchBoxBottom:
     size_z = 16.5
     hull_thickness = 1.6
     corner_r = 2.5
-    screw_d = 3
+    screw_hole_bottom_d = 1.5
+    screw_hole_top_d = 2.5
     is_top: bool
 
     def draw(self):
@@ -90,7 +91,7 @@ class UsbSwitchBoxBottom:
         pcp_support_z_over = usb_switch_box_cores.core_pcb.pcp_support_z_over
 
         # Box with corners
-        corner = library_box.Corner()
+        corner = library_box.Corner(hole_d=self.screw_hole_bottom_d)
         boxskeleton = library_box.BoxSkeleton(
             size_x=self.size_x,
             size_y=self.size_y,
