@@ -33,6 +33,7 @@ class CoreDisplay:
     glass_width = 48
     glass_height = 20
     glass_r = 3
+    is_top: bool
 
     def draw(self):
         display = union()
@@ -73,16 +74,17 @@ class CoreDisplay:
         usb_center_y = 19
         display += translate([pi_width / 2, usb_center_y, 0])(CoreDisplayUsb().draw())
 
-        # Reset Button
-        for z in (-3, -2, -1, 0, 1, 2):
-            display += translate([13, 21, z])(rotate([90, 0, 0])(cylinder(d=5, h=21)))
+        if not self.is_top:
+            # Reset Button
+            for z in (-3, -2, -1, 0, 1, 2):
+                display += translate([13, 21, z])(rotate([90, 0, 0])(cylinder(d=5, h=21)))
 
         return display
 
 
 SEGMENTS = 100
 
-core_display = CoreDisplay()
+core_display = CoreDisplay(is_top=False)
 
 scad_render_to_file(
     core_display.draw(), file_header=f"$fn = {SEGMENTS};", include_orig_code=True

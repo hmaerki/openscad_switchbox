@@ -5,7 +5,7 @@ from solid.utils import *
 import library_box
 import library_usb_switchbox_bottom
 
-bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom()
+bottom = library_usb_switchbox_bottom.UsbSwitchBoxBottom(is_top=False)
 
 
 @dataclass
@@ -50,7 +50,8 @@ class UsbSwitchBoxTop:
         cores = translate(v=[0, 0, pcb_offset_z])(
             rotate([180, 0, 0])(
                 library_usb_switchbox_bottom.UsbSwitchBoxCores(
-                    size_x=self.size_x
+                    size_x=self.size_x,
+                    is_top=True
                 ).draw()
             )
         )

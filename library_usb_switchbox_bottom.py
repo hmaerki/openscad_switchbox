@@ -15,6 +15,7 @@ class UsbSwitchBoxCores:
     core_pcb_assembled = library_pcb.CorePcbAssembled()
     pcb_offset_x = -6
     pcb_offset_z = 9
+    is_top: bool
 
     @property
     def core_pcb(self):
@@ -26,7 +27,7 @@ class UsbSwitchBoxCores:
         display_x = self.size_x / 2
         display_z = 14
         cores += translate(v=[display_x, 0, display_z])(
-            rotate([0, 0, 90])(library_display.CoreDisplay().draw())
+            rotate([0, 0, 90])(library_display.CoreDisplay(is_top=self.is_top).draw())
         )
         # PCB
         cores += translate(v=[self.pcb_offset_x, 0, self.pcb_offset_z])(
@@ -77,9 +78,10 @@ class UsbSwitchBoxBottom:
     hull_thickness = 1.6
     corner_r = 2.5
     screw_d = 3
+    is_top: bool
 
     def draw(self):
-        usb_switch_box_cores = UsbSwitchBoxCores(size_x=self.size_x)
+        usb_switch_box_cores = UsbSwitchBoxCores(size_x=self.size_x, is_top=self.is_top)
 
         pcb_offset_x = usb_switch_box_cores.pcb_offset_x
         pcb_offset_z = usb_switch_box_cores.pcb_offset_z
@@ -158,7 +160,7 @@ class UsbSwitchBoxBottom:
 
 SEGMENTS = 100
 
-box = UsbSwitchBoxBottom()
+box = UsbSwitchBoxBottom(is_top=False)
 
 scad_render_to_file(
     box.draw(), file_header=f"$fn = {SEGMENTS};", include_orig_code=True
