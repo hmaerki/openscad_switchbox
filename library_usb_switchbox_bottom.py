@@ -25,7 +25,7 @@ class UsbSwitchBoxCores:
         cores = union()
         # Display
         display_x = self.size_x / 2
-        display_z = 14
+        display_z = 15
         cores += translate(v=[display_x, 0, display_z])(
             rotate([0, 0, 90])(library_display.CoreDisplay(is_top=self.is_top).draw())
         )
