@@ -15,6 +15,7 @@ class UsbSwitchBoxTop:
     size_z_overall = 30
     size_z = size_z_overall - bottom.size_z
     hull_thickness = bottom.hull_thickness
+    bottom_top_thickness = bottom.bottom_top_thickness
     corner_r = bottom.corner_r
     screw_hole_top_d  = bottom.screw_hole_top_d    
 
@@ -26,6 +27,7 @@ class UsbSwitchBoxTop:
             size_y=self.size_y,
             size_z=self.size_z,
             hull_thickness=self.hull_thickness,
+            bottom_top_thickness=self.bottom_top_thickness,
         )
         box = library_box.Box(boxskeleton=boxskeleton, corner=corner)
 
@@ -46,8 +48,7 @@ class UsbSwitchBoxTop:
                 )(support.draw()),
             )
 
-        pcb_offset_z = 29
-        cores = translate(v=[0, 0, pcb_offset_z])(
+        cores = translate(v=[0, 0, self.size_z_overall])(
             rotate([180, 0, 0])(
                 library_usb_switchbox_bottom.UsbSwitchBoxCores(
                     size_x=self.size_x,

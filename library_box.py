@@ -48,6 +48,7 @@ class BoxSkeleton:
     size_y: float = 30.0
     size_z: float = 10.0
     hull_thickness: float = 1.0
+    bottom_top_thickness: float = 1.0
     wall_r: float = 6.0
     cavities = union()
 
@@ -69,7 +70,7 @@ class BoxSkeleton:
             ),
             # Inner box
             # z-Axis: on inner buttom
-            translate(v=[0, 0, self.hull_thickness])(
+            translate(v=[0, 0, self.bottom_top_thickness])(
                 linear_extrude(height=self.size_z + 0.01)(
                     difference()(
                         offset(r=self.wall_r - self.hull_thickness)(

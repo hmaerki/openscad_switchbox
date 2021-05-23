@@ -6,7 +6,7 @@ from solid.utils import *
 @dataclass
 class CoreUsbDevice:
     size_x = 15
-    size_z = 7.5
+    size_z = 8.5
     size_y_dummy = 35
 
     def draw(self):

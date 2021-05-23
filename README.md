@@ -24,3 +24,6 @@ TODO:
 
   * DONE: Physical: Display reposition reset buttom
   * DONE: Physical: BCP Socket with overlap.
+
+  * DONE: Double wall thickness
+  * DONE: USB-Device is visible in top

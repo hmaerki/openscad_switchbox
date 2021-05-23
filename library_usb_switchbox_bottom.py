@@ -14,7 +14,7 @@ class UsbSwitchBoxCores:
     size_x: float
     core_pcb_assembled = library_pcb.CorePcbAssembled()
     pcb_offset_x = -6
-    pcb_offset_z = 9
+    pcb_offset_z = 10
     is_top: bool
 
     @property
@@ -74,8 +74,9 @@ class SupportX:
 class UsbSwitchBoxBottom:
     size_y = 66
     size_x = 120
-    size_z = 16.5
-    hull_thickness = 1.6
+    size_z = 18.5
+    hull_thickness = 2.4
+    bottom_top_thickness = 1.6
     corner_r = 2.5
     screw_hole_bottom_d = 1.5
     screw_hole_top_d = 2.5
@@ -97,6 +98,7 @@ class UsbSwitchBoxBottom:
             size_y=self.size_y,
             size_z=self.size_z,
             hull_thickness=self.hull_thickness,
+            bottom_top_thickness=self.bottom_top_thickness,
         )
         box = library_box.Box(boxskeleton=boxskeleton, corner=corner)
 

@@ -71,7 +71,7 @@ class CoreDisplay:
         )(cube([pi_width, pi_thickness, pi_height]))
 
         # USB
-        usb_center_y = 19
+        usb_center_y = 18
         display += translate([pi_width / 2, usb_center_y, 0])(CoreDisplayUsb().draw())
 
         if not self.is_top:
